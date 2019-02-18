@@ -1,5 +1,5 @@
 ﻿using System.IO;
-using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
 using Microsoft.AspNetCore.Http;
@@ -26,33 +26,14 @@ namespace Arex388.AspNetCore.Http {
 				if (response.ContentType.Contains("text/html")) {
 					var document = new HtmlDocument();
 
-					document.Load(memoryStream);
-
-					TrimWhitespace(document.DocumentNode);
-
+					document.Load(memoryStream, Encoding.UTF8);
+					document.DocumentNode.TrimWhitespace();
 					document.Save(stream);
 				}
 
 				await memoryStream.CopyToAsync(stream);
 
 				response.Body = stream;
-			}
-		}
-
-		private static void TrimWhitespace(
-			HtmlNode document) {
-			var textNodes = document.SelectNodesAsList("//text()").Where(
-				n => string.IsNullOrWhiteSpace(n.InnerHtml));
-
-			foreach (var textNode in textNodes) {
-				textNode.Remove();
-			}
-
-			var commentNodes = document.SelectNodesAsList("//comment()").Where(
-				n => n.InnerHtml != "<!DOCTYPE html>");
-
-			foreach (var commentNode in commentNodes) {
-				commentNode.Remove();
 			}
 		}
 	}

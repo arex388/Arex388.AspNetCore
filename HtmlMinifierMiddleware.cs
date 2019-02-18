@@ -33,7 +33,7 @@ namespace Arex388.AspNetCore.Http {
 					document.Save(stream);
 				}
 
-				memoryStream.CopyTo(stream);
+				await memoryStream.CopyToAsync(stream);
 
 				response.Body = stream;
 			}

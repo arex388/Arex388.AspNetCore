@@ -2,10 +2,8 @@
 
 namespace Arex388.AspNetCore.Http {
 	public static class SitemapMiddlewareExtensions {
-		public static IApplicationBuilder UseSitemapMiddleware<TMiddleware>(
+		public static IApplicationBuilder UseSitemap<TMiddleware>(
 			this IApplicationBuilder app)
-			where TMiddleware : SitemapMiddlewareBase {
-			return app.UseMiddleware<TMiddleware>();
-		}
+			where TMiddleware : SitemapMiddlewareBase => app.UseMiddleware<TMiddleware>();
 	}
 }

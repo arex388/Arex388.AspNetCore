@@ -23,7 +23,8 @@ namespace Arex388.AspNetCore.Http {
 
 				memoryStream.Seek(0, SeekOrigin.Begin);
 
-				if (response.ContentType.Contains("text/html")) {
+				if (!string.IsNullOrEmpty(response.ContentType)
+					&& response.ContentType.Contains("text/html")) {
 					var document = new HtmlDocument();
 
 					document.Load(memoryStream, Encoding.UTF8);

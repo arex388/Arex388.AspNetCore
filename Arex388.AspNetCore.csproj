@@ -7,7 +7,7 @@
     <PackageProjectUrl>https://github.com/arex388/Arex388.AspNetCore</PackageProjectUrl>
     <RepositoryUrl>https://github.com/arex388/Arex388.AspNetCore</RepositoryUrl>
     <PackageTags>asp-net-core arex388</PackageTags>
-    <Version>1.0.4</Version>
+    <Version>1.0.9</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -19,7 +19,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="HtmlAgilityPack" Version="1.9.0" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.9.1" />
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor" Version="2.2.0" />
   </ItemGroup>

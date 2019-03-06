@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Arex388.AspNetCore.Mvc.Razor {
+namespace Arex388.AspNetCore {
 	public static class FeaturesViewLocationExpanderExtensions {
 		public static void AddFeatures(
 			this IServiceCollection services) {

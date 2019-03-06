@@ -1,9 +1,16 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System;
+using Microsoft.AspNetCore.Builder;
 
-namespace Arex388.AspNetCore.Http {
+namespace Arex388.AspNetCore {
 	public static class SitemapMiddlewareExtensions {
 		public static IApplicationBuilder UseSitemap<TMiddleware>(
-			this IApplicationBuilder app)
-			where TMiddleware : SitemapMiddlewareBase => app.UseMiddleware<TMiddleware>();
+			this IApplicationBuilder builder)
+			where TMiddleware : SitemapMiddlewareBase {
+			if (builder is null) {
+				throw new ArgumentNullException(nameof(builder));
+			}
+
+			return builder.UseMiddleware<TMiddleware>();
+		}
 	}
 }

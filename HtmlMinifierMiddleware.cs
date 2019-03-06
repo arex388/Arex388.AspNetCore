@@ -1,15 +1,18 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
 using Microsoft.AspNetCore.Http;
 
-namespace Arex388.AspNetCore.Http {
+namespace Arex388.AspNetCore {
 	public sealed class HtmlMinifierMiddleware {
 		private RequestDelegate Next { get; }
 
 		public HtmlMinifierMiddleware(
-			RequestDelegate next) => Next = next;
+			RequestDelegate next) {
+			Next = next ?? throw new ArgumentNullException(nameof(next));
+		}
 
 		public async Task InvokeAsync(
 			HttpContext context) {

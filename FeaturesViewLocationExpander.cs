@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.Razor;
 
-namespace Arex388.AspNetCore.Mvc.Razor {
+namespace Arex388.AspNetCore {
 	public sealed class FeaturesViewLocationExpander :
 		IViewLocationExpander {
-
 		//	{0} = action
 		//	{1} = controller
 		//	{2} = area

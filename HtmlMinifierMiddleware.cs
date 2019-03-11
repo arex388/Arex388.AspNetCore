@@ -10,16 +10,13 @@ namespace Arex388.AspNetCore {
 		private RequestDelegate Next { get; }
 
 		public HtmlMinifierMiddleware(
-			RequestDelegate next) {
-			Next = next ?? throw new ArgumentNullException(nameof(next));
-		}
+			RequestDelegate next) => Next = next ?? throw new ArgumentNullException(nameof(next));
 
 		public async Task InvokeAsync(
 			HttpContext context) {
 			var request = context.Request;
 
-			if (request.HasFormContentType
-				|| request.Path.Value == "/favicon.ico") {
+			if (request.Path.Value == "/favicon.ico") {
 				await Next(context);
 
 				return;
@@ -41,7 +38,8 @@ namespace Arex388.AspNetCore {
 
 				memoryStream.Seek(0, SeekOrigin.Begin);
 
-				if (!string.IsNullOrEmpty(response.ContentType)
+				if (response.StatusCode == 200
+					&& !string.IsNullOrEmpty(response.ContentType)
 					&& response.ContentType.Contains("text/html")) {
 					var document = new HtmlDocument();
 

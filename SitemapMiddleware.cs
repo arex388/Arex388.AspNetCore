@@ -6,8 +6,6 @@ namespace Arex388.AspNetCore {
 		protected RequestDelegate Next { get; }
 
 		protected SitemapMiddlewareBase(
-			RequestDelegate next) {
-			Next = next ?? throw new ArgumentNullException(nameof(next));
-		}
+			RequestDelegate next) => Next = next ?? throw new ArgumentNullException(nameof(next));
 	}
 }

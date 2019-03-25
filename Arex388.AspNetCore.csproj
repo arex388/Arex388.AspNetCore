@@ -3,11 +3,11 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <LangVersion>latest</LangVersion>
-    <Description>ASP.NET Core extension methods I use</Description>
+    <Description>ASP.NET Core extension methods used by Arex388. Feel free to use it as well. The documentation is available on GitHub.</Description>
     <PackageProjectUrl>https://github.com/arex388/Arex388.AspNetCore</PackageProjectUrl>
     <RepositoryUrl>https://github.com/arex388/Arex388.AspNetCore</RepositoryUrl>
     <PackageTags>asp-net-core arex388</PackageTags>
-    <Version>1.0.12</Version>
+    <Version>1.0.18</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -19,7 +19,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="HtmlAgilityPack" Version="1.10.2" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.0" />
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor" Version="2.2.0" />
   </ItemGroup>

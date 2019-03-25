@@ -6,11 +6,12 @@ This is a small library with ASP.NET Core extensions that I use across my differ
 
 There is a extension method for `IServiceCollection` called `AddArex388()` which you can use for basic configuration to enable any of the following:
 
-- `UseFeatures` to enable the `FeaturesViewLocationExpander`.
-- `UseIdentityProvider` to configure the `IdentityProvider` to be injectable.
-- `UseSimpleSlugifyParameterTransformer` to enable the `SimpleSlugifyParameterTransformer`.
-- `UseTokenProvider` to configure the `TokenProvider` to be injectable.
+- `UseFeatures` to enable the `FeaturesViewLocationExpander`
+- `UseIdentityProvider` to configure the `IdentityProvider` to be injectable
+- `UseSimpleSlugifyParameterTransformer` to enable the `SimpleSlugifyParameterTransformer`
+- `UseTokenProvider` to configure the `TokenProvider` to be injectable
 
+Here's the `Startup` code:
 
     public void ConfigureServices(
         IServiceCollection services) {

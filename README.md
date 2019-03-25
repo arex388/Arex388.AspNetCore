@@ -11,6 +11,7 @@ There is a extension method for `IServiceCollection` called `AddArex388()` which
 - `UseSimpleSlugifyParameterTransformer` to enable the `SimpleSlugifyParameterTransformer`.
 - `UseTokenProvider` to configure the `TokenProvider` to be injectable.
 
+
     public void ConfigureServices(
         IServiceCollection services) {
         services.AddArex388(

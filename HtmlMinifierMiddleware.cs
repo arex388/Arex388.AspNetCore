@@ -25,32 +25,30 @@ namespace Arex388.AspNetCore {
 			var response = context.Response;
 			var stream = response.Body;
 
-			using (var memoryStream = new MemoryStream()) {
-				response.Body = memoryStream;
+			try {
+				using (var memoryStream = new MemoryStream()) {
+					response.Body = memoryStream;
 
-				try {
 					await Next(context);
-				} catch {
-					response.Body = stream;
 
-					throw;
+					memoryStream.Seek(0, SeekOrigin.Begin);
+
+					if (response.StatusCode == 200
+						&& !string.IsNullOrEmpty(response.ContentType)
+						&& response.ContentType.Contains("text/html")) {
+						var document = new HtmlDocument();
+
+						document.Load(memoryStream, Encoding.UTF8);
+						document.DocumentNode.TrimWhitespace();
+
+						var html = document.DocumentNode.OuterHtml;
+						var htmlBytes = Encoding.UTF8.GetBytes(html);
+
+						await stream.WriteAsync(htmlBytes);
+					}
 				}
-
-				memoryStream.Seek(0, SeekOrigin.Begin);
-
-				if (response.StatusCode == 200
-					&& !string.IsNullOrEmpty(response.ContentType)
-					&& response.ContentType.Contains("text/html")) {
-					var document = new HtmlDocument();
-
-					document.Load(memoryStream, Encoding.UTF8);
-					document.DocumentNode.TrimWhitespace();
-					document.Save(stream);
-				}
-
-				await memoryStream.CopyToAsync(stream);
-
-				response.Body = stream;
+			} finally {
+				request.Body = stream;
 			}
 		}
 	}

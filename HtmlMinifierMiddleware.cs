@@ -47,8 +47,10 @@ namespace Arex388.AspNetCore {
 						await stream.WriteAsync(htmlBytes);
 					}
 				}
-			} finally {
-				request.Body = stream;
+			} catch {
+				response.Body = stream;
+
+				throw;
 			}
 		}
 	}

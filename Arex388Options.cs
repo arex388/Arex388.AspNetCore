@@ -3,6 +3,6 @@
 		public bool UseFeatures { get; set; }
 		public bool UseIdentityProvider { get; set; }
 		public bool UseSimpleSlugifyParameterTransformer { get; set; }
-		public bool UseTokenProvider { get; set; }
+		//public bool UseTokenProvider { get; set; }
 	}
 }

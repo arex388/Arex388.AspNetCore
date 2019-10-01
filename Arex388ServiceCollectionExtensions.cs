@@ -46,10 +46,10 @@ namespace Arex388.AspNetCore {
 					});
 			}
 
-			if (options.UseTokenProvider) {
-				services.TryAddScoped<Random>();
-				services.TryAddScoped<TokenProvider>();
-			}
+			//if (options.UseTokenProvider) {
+			//	services.TryAddScoped<Random>();
+			//	services.TryAddScoped<TokenProvider>();
+			//}
 			
 			return services;
 		}

@@ -2,20 +2,27 @@
 using System.Linq;
 
 namespace Arex388.AspNetCore {
-	public sealed class TokenProvider {
+	public static class TokenProvider {
 		private const string Characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz";
 
-		private Random Random { get; }
+		private static Random Random { get; } = new Random();
 
-		public TokenProvider(
-			Random random) => Random = random;
-
-		public string Create(
+		public static string Create(
 			int length) {
 			var characters = Enumerable.Repeat(Characters, length).Select(
 				s => s[Random.Next(62)]).ToArray();
 
 			return new string(characters);
 		}
+
+		public static string Create8() => Create(8);
+
+		public static string Create16() => Create(16);
+
+		public static string Create32() => Create(32);
+
+		public static string Create64() => Create(64);
+
+		public static string Create128() => Create(128);
 	}
 }

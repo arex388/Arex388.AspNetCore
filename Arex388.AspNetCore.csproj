@@ -1,27 +1,28 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
-  <PropertyGroup>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
-    <LangVersion>latest</LangVersion>
-    <Description>ASP.NET Core extension methods used by Arex388. Feel free to use it as well. The documentation is available on GitHub.</Description>
-    <PackageProjectUrl>https://github.com/arex388/Arex388.AspNetCore</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/arex388/Arex388.AspNetCore</RepositoryUrl>
-    <PackageTags>asp-net-core arex388</PackageTags>
-    <Version>1.0.20</Version>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>netcoreapp3.0</TargetFramework>
+		<Description>ASP.NET Core 3.0 extensions used by Arex388. Feel free to use them as well, but be aware that I may make breaking changes at any time to suit my needs first. Refer to the README on GitHub for instructions on how to use the extensions.</Description>
+		<PackageProjectUrl>https://github.com/arex388/Arex388.AspNetCore</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/arex388/Arex388.AspNetCore</RepositoryUrl>
+		<PackageTags>asp-net-core arex388</PackageTags>
+		<Version>3.0.0</Version>
+		<ApplicationIcon />
+		<OutputType>Library</OutputType>
+		<StartupObject />
+		<IsPackable>true</IsPackable>
+	</PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
-  </PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+	</PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
-  </PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="HtmlAgilityPack" Version="1.11.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor" Version="2.2.0" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="HtmlAgilityPack" Version="1.11.15" />
+	</ItemGroup>
 
 </Project>

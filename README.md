@@ -2,6 +2,8 @@
 
 This is a small library with ASP.NET Core extensions that I use across my different projects. Below is a list of the available extensions and how to use them. I'd be happy if you found a use for the library, but be aware that I change it often to suit my needs, generally by adding new functionality, but sometimes with breaking changes.
 
+With the release of .NET Core 3.0, I've decided to upgrade the library to it, and to change the version to 3.0.0 as well to match.
+
 #### Basic Configuration
 
 There is a extension method for `IServiceCollection` called `AddArex388()` which you can use for basic configuration to enable any of the following:
@@ -25,6 +27,10 @@ Here's the `Startup` code:
     }
 
 #### AuthenticatedStaticFilesMiddleware
+
+I am going to revisit this in the future because of the changes to authentication and authorization in ASP.NET Core 3.0.
+
+<strike>
 
 The `AuthenticatedStaticFilesMiddleware` is a "security" middleware to intercept requests to static files that should be used after a user is successfully authenticated. If the user is not authenticated, then it returns a 404 response.
 
@@ -52,6 +58,8 @@ I use it to block un-authenticated access to JavaScript and CSS files that may "
 		//  ...
 	}
 
+</strike>
+
 #### FeaturesViewLocationExpander
 
 The `FeaturesViewLocationExpander` is a location expander for the Razor View Engine. It clears all currently registered location expanders, and adds itself. The expander follows the Features folders structure as described by Jimmy Bogard's Vertical Slices Architecture.
@@ -73,15 +81,20 @@ You can extend it by inheriting from it, which gives you access to the `IHttpCon
 
 #### HtmlMinifierMiddleware
 
-The `HtmlMinifierMiddleware` intercepts the response being returned and minifies the HTML using the HtmlAgilityPack. Ideally you should use it right before using Mvc.
+The `HtmlMinifierMiddleware` intercepts the response being returned and minifies the HTML using the HtmlAgilityPack. <strike>Ideally you should use it right before using Mvc.
+</strike> The `UseMvc` extension is no longer relevant in ASP.NET Core 3.0, so I would recommend using it right after the call to `UseStaticFiles`.
 
 	public void Configure(
 		IApplicationBuilder app) {
+        app.UseStaticFiles();
 		app.UseHtmlMinifier();
-		app.UseMvc(...);
 	}
 
 #### OneOffMiddleware
+
+I'm starting to have misgivings about this, so until I can sit down and think about it clearly, I am removing it.
+
+<strike>
 
 The `OneOffMiddleware` is a "placeholder" middleware for triggering "one-off" tasks using the middleware pipeline.
 
@@ -128,6 +141,8 @@ Then in the `Startup` class you need to register the `OneOffServices` as scoped,
 		app.UseOneOff<OneOffMiddleware>();
 	}
 
+</strike>
+
 #### SimpleSlugifyParameterTransformer
 
 The `SimpleSlugifyParameterTransformer` is, as the name implies, a very simple `IOutboundParameterTransformer` that slugifies the action's name by taking it's camel cased version and kebaberizing it.
@@ -145,6 +160,6 @@ I usually pass in my `DbContext` instance and proceed to build out the XML that 
 
 #### TokenProvider
 
-The `TokenProvider` is a small helper class for generating random strings. It is not secure by any means, but works fine for temporary passwords or validation tokens.
+The `TokenProvider` is a small helper class for generating random strings. It is not secure by any means, but works fine for temporary passwords or validation tokens. I've also decided to make it a static class and add helper methods for the 3.0.0 update.
 
-    var token = new TokenProvider(...).Create(128);
+    var token = TokenProvider.Create(128);

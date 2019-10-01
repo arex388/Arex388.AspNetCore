@@ -1,33 +1,33 @@
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿//using System;
+//using System.Threading.Tasks;
+//using Microsoft.AspNetCore.Http;
 
-namespace Arex388.AspNetCore {
-	public abstract class OneOffMiddlewareBase {
-		protected static bool HasProcessed { get; set; }
+//namespace Arex388.AspNetCore {
+//	public abstract class OneOffMiddlewareBase {
+//		protected static bool HasProcessed { get; set; }
 
-		protected RequestDelegate Next { get; }
+//		protected RequestDelegate Next { get; }
 
-		protected OneOffMiddlewareBase(
-			RequestDelegate next) => Next = next ?? throw new ArgumentNullException(nameof(next));
+//		protected OneOffMiddlewareBase(
+//			RequestDelegate next) => Next = next ?? throw new ArgumentNullException(nameof(next));
 
-		public async Task InvokeAsync(
-			HttpContext context,
-			IOneOffServices services) {
-			if (HasProcessed) {
-				await Next(context);
+//		public async Task InvokeAsync(
+//			HttpContext context,
+//			IOneOffServices services) {
+//			if (HasProcessed) {
+//				await Next(context);
 
-				return;
-			}
+//				return;
+//			}
 
-			await InvokeInternalAsync(services);
+//			await InvokeInternalAsync(services);
 
-			HasProcessed = true;
+//			HasProcessed = true;
 
-			await Next(context);
-		}
+//			await Next(context);
+//		}
 
-		protected abstract Task InvokeInternalAsync(
-			IOneOffServices services);
-	}
-}
+//		protected abstract Task InvokeInternalAsync(
+//			IOneOffServices services);
+//	}
+//}

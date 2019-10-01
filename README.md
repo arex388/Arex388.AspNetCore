@@ -11,7 +11,6 @@ There is a extension method for `IServiceCollection` called `AddArex388()` which
 - `UseFeatures` to enable the `FeaturesViewLocationExpander`
 - `UseIdentityProvider` to configure the `IdentityProvider` to be injectable
 - `UseSimpleSlugifyParameterTransformer` to enable the `SimpleSlugifyParameterTransformer`
-- `UseTokenProvider` to configure the `TokenProvider` to be injectable
 
 Here's the `Startup` code:
 
@@ -22,7 +21,6 @@ Here's the `Startup` code:
                 o.UseFeatures = true;
                 o.UseIdentityProvider = true;
                 o.UseSimpleSlugifyParameterTransformer = true;
-                o.UseTokenProvider = true;
             });
     }
 

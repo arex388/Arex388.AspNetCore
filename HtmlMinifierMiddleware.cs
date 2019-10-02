@@ -15,13 +15,6 @@ namespace Arex388.AspNetCore {
 		public async Task InvokeAsync(
 			HttpContext context) {
 			var request = context.Request;
-
-			if (request.Path.Value == "/favicon.ico") {
-				await Next(context);
-
-				return;
-			}
-
 			var response = context.Response;
 			var stream = response.Body;
 

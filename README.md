@@ -77,14 +77,25 @@ You can extend it by inheriting from it, which gives you access to the `IHttpCon
         public string UserLovesArex388 => Accessor.HttpContext.User.GetValue("LovesArex388");
     }
 
-#### HtmlMinifierMiddleware
+#### AntiFaviconMiddleware
 
-The `HtmlMinifierMiddleware` intercepts the response being returned and minifies the HTML using the HtmlAgilityPack. <strike>Ideally you should use it right before using Mvc.
-</strike> The `UseMvc` extension is no longer relevant in ASP.NET Core 3.0, so I would recommend using it right after the call to `UseStaticFiles`.
+The annoying, unsolicited, requests to `/favicon.ico` that browsers love to do has been, well, annoying me. Because it get's processed all the way up the stack in my case it's triggering double the amount of database queries for user details. I've added this middleware to just intercept it and return a 404 as soon as possible.
 
 	public void Configure(
 		IApplicationBuilder app) {
-        app.UseStaticFiles();
+		app.UseStaticFiles();
+		app.UseAntiFavicon();
+	}
+
+#### HtmlMinifierMiddleware
+
+The `HtmlMinifierMiddleware` intercepts the response being returned and minifies the HTML using the HtmlAgilityPack. <strike>Ideally you should use it right before using Mvc.
+</strike> The `UseMvc` extension is no longer relevant in ASP.NET Core 3.0, so I would recommend using it right after the call to `UseStaticFiles` and `UseAntiFavicon`.
+
+	public void Configure(
+		IApplicationBuilder app) {
+		app.UseStaticFiles();
+		app.UseAntiFavicon();
 		app.UseHtmlMinifier();
 	}
 

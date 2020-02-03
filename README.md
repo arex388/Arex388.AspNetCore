@@ -76,7 +76,7 @@ The `SimpleSlugifyParameterTransformer` is, as the name implies, a very simple `
 
 #### SitemapMiddleware
 
-The `SitemapMiddleware` is a placeholder middleware for intercepting requests to "/sitemap.xml". There are two components to it. First you need to have a class that implements `ISitemapServices` and another class that inherits from `SitemapMiddlewareBase` and implements the `InvokeInternalAsync()` method.
+The `SitemapMiddleware` is a placeholder middleware for intercepting requests to `/sitemap.xml`. There are two components to it. First you need to have a class that implements `ISitemapServices` and another class that inherits from `SitemapMiddlewareBase` and implements the `InvokeInternalAsync()` method.
 
 I usually pass in my `DbContext` instance and proceed to build out the XML that will be returned based on the needs of the application.
 

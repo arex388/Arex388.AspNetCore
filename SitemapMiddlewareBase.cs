@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 
 namespace Arex388.AspNetCore {
 	public abstract class SitemapMiddlewareBase {
@@ -28,15 +28,15 @@ namespace Arex388.AspNetCore {
 			response.ContentType = "application/xml";
 			response.StatusCode = 200;
 
-			using (var memoryStream = new MemoryStream()) {
-				var bytes = Encoding.UTF8.GetBytes(sitemap);
+			await using var memoryStream = new MemoryStream();
 
-				await memoryStream.WriteAsync(bytes, 0, bytes.Length);
+			var bytes = Encoding.UTF8.GetBytes(sitemap);
 
-				memoryStream.Seek(0, SeekOrigin.Begin);
+			await memoryStream.WriteAsync(bytes, 0, bytes.Length);
 
-				await memoryStream.CopyToAsync(stream, bytes.Length);
-			}
+			memoryStream.Seek(0, SeekOrigin.Begin);
+
+			await memoryStream.CopyToAsync(stream, bytes.Length);
 		}
 
 		protected abstract Task<string> InvokeInternalAsync(

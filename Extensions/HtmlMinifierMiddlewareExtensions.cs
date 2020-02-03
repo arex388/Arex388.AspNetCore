@@ -1,7 +1,7 @@
-﻿using System;
-using Microsoft.AspNetCore.Builder;
+﻿using Arex388.AspNetCore;
+using System;
 
-namespace Arex388.AspNetCore {
+namespace Microsoft.AspNetCore.Builder {
 	public static class HtmlMinifierMiddlewareExtensions {
 		public static IApplicationBuilder UseHtmlMinifier(
 			this IApplicationBuilder builder) {

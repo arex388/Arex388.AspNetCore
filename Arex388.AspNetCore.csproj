@@ -1,12 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
 	<PropertyGroup>
-		<TargetFramework>netcoreapp3.0</TargetFramework>
+		<TargetFramework>netcoreapp3.1</TargetFramework>
 		<Description>ASP.NET Core 3.0 extensions used by Arex388. Feel free to use them as well, but be aware that I may make breaking changes at any time to suit my needs first. Refer to the README on GitHub for instructions on how to use the extensions.</Description>
 		<PackageProjectUrl>https://github.com/arex388/Arex388.AspNetCore</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/arex388/Arex388.AspNetCore</RepositoryUrl>
 		<PackageTags>asp-net-core arex388</PackageTags>
-		<Version>3.0.1</Version>
+		<Version>3.1.0</Version>
 		<ApplicationIcon />
 		<OutputType>Library</OutputType>
 		<StartupObject />
@@ -22,7 +22,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="HtmlAgilityPack" Version="1.11.15" />
+		<PackageReference Include="HtmlAgilityPack" Version="1.11.18" />
 	</ItemGroup>
 
 </Project>

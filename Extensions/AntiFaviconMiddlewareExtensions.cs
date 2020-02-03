@@ -1,7 +1,7 @@
-﻿using System;
-using Microsoft.AspNetCore.Builder;
+﻿using Arex388.AspNetCore;
+using System;
 
-namespace Arex388.AspNetCore {
+namespace Microsoft.AspNetCore.Builder {
 	public static class AntiFaviconMiddlewareExtensions {
 		public static IApplicationBuilder UseAntiFavicon(
 			this IApplicationBuilder builder) {

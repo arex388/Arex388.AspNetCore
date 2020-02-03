@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Routing;
+﻿using Microsoft.AspNetCore.Routing;
+using System.Collections.Generic;
 
 namespace Arex388.AspNetCore {
 	public sealed class SimpleSlugifyParameterTransformer :

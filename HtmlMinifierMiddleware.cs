@@ -1,12 +1,14 @@
-﻿using System;
+﻿using HtmlAgilityPack;
+using Microsoft.AspNetCore.Http;
+using System;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
-using HtmlAgilityPack;
-using Microsoft.AspNetCore.Http;
 
 namespace Arex388.AspNetCore {
 	public sealed class HtmlMinifierMiddleware {
+		private const string ContentType = "text/html; charset=utf-8";
+
 		private RequestDelegate Next { get; }
 
 		public HtmlMinifierMiddleware(
@@ -14,36 +16,35 @@ namespace Arex388.AspNetCore {
 
 		public async Task InvokeAsync(
 			HttpContext context) {
-			var request = context.Request;
 			var response = context.Response;
 			var stream = response.Body;
 
 			try {
-				using (var memoryStream = new MemoryStream()) {
-					response.Body = memoryStream;
+				await using var memoryStream = new MemoryStream();
 
-					await Next(context);
+				response.Body = memoryStream;
 
-					memoryStream.Seek(0, SeekOrigin.Begin);
+				await Next(context);
 
-					if (response.StatusCode == 200
-						&& !string.IsNullOrEmpty(response.ContentType)
-						&& response.ContentType.Contains("text/html")) {
-						var document = new HtmlDocument();
+				memoryStream.Seek(0, SeekOrigin.Begin);
 
-						document.Load(memoryStream, Encoding.UTF8);
-						document.DocumentNode.TrimWhitespace();
+				if (response.ContentType != ContentType) {
+					await memoryStream.CopyToAsync(stream);
 
-						var html = document.DocumentNode.OuterHtml;
-						var htmlBytes = Encoding.UTF8.GetBytes(html);
-
-						await stream.WriteAsync(htmlBytes);
-					}
+					return;
 				}
-			} catch {
-				response.Body = stream;
 
-				throw;
+				var document = new HtmlDocument();
+
+				document.Load(memoryStream, Encoding.UTF8);
+				document.DocumentNode.TrimWhitespace();
+
+				var html = document.DocumentNode.OuterHtml;
+				var htmlBytes = Encoding.UTF8.GetBytes(html);
+
+				await stream.WriteAsync(htmlBytes);
+			} finally {
+				response.Body = stream;
 			}
 		}
 	}

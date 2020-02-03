@@ -1,7 +1,4 @@
-﻿using System;
-using System.Security.Claims;
-
-namespace Arex388.AspNetCore {
+﻿namespace System.Security.Claims {
 	public static class ClaimsPrincipalExtensions {
 		public static int? GetUserId(
 			this ClaimsPrincipal principal) {

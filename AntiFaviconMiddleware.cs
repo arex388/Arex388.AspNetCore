@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Net;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 
 namespace Arex388.AspNetCore {
 	public sealed class AntiFaviconMiddleware {

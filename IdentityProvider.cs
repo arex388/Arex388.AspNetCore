@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
 
 namespace Arex388.AspNetCore {
 	public class IdentityProvider {

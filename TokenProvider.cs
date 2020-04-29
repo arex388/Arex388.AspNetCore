@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Arex388.AspNetCore {
 	public static class TokenProvider {
-		private const string Characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz";
+		private const string Characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
 		private static Random Random { get; } = new Random();
 

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 namespace Arex388.AspNetCore {
-	public sealed class FeaturesViewLocationExpander :
+    public sealed class FeaturesViewLocationExpander :
 		IViewLocationExpander {
 		//	{0} = action
 		//	{1} = controller

@@ -4,24 +4,26 @@ using System.Net;
 using System.Threading.Tasks;
 
 namespace Arex388.AspNetCore {
-	public sealed class AntiFaviconMiddleware {
-		private RequestDelegate Next { get; }
+    public sealed class AntiFaviconMiddleware {
+        private const string FaviconPath = "/favicon.ico";
 
-		public AntiFaviconMiddleware(
-			RequestDelegate next) => Next = next ?? throw new ArgumentNullException(nameof(next));
+        private readonly RequestDelegate _next;
 
-		public async Task InvokeAsync(
-			HttpContext context) {
-			var request = context.Request;
-			var response = context.Response;
+        public AntiFaviconMiddleware(
+            RequestDelegate next) => _next = next ?? throw new ArgumentNullException(nameof(next));
 
-			if (request.Path.Value == "/favicon.ico") {
-				response.StatusCode = (int)HttpStatusCode.NotFound;
+        public async Task InvokeAsync(
+            HttpContext context) {
+            var request = context.Request;
+            var response = context.Response;
 
-				return;
-			}
+            if (request.Path.Value != FaviconPath) {
+                await _next(context);
 
-			await Next(context);
-		}
-	}
+                return;
+            }
+
+            response.StatusCode = (int)HttpStatusCode.NotFound;
+        }
+    }
 }

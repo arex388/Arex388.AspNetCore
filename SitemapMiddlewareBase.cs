@@ -5,41 +5,44 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Arex388.AspNetCore {
-	public abstract class SitemapMiddlewareBase {
-		protected RequestDelegate Next { get; }
+    public abstract class SitemapMiddlewareBase {
+        private const string ContentTypeXml = "application/xml";
+        private const string SitemapPath = "/sitemap.xml";
 
-		protected SitemapMiddlewareBase(
-			RequestDelegate next) => Next = next ?? throw new ArgumentNullException(nameof(next));
+        protected RequestDelegate Next { get; }
 
-		public async Task InvokeAsync(
-			HttpContext context,
-			ISitemapServices services) {
-			if (!context.Request.Path.Value.Equals("/sitemap.xml", StringComparison.OrdinalIgnoreCase)) {
-				await Next(context);
+        protected SitemapMiddlewareBase(
+            RequestDelegate next) => Next = next ?? throw new ArgumentNullException(nameof(next));
 
-				return;
-			}
+        public async Task InvokeAsync(
+            HttpContext context,
+            ISitemapServices services) {
+            if (context.Request.Path.Value != SitemapPath) {
+                await Next(context);
 
-			var sitemap = await InvokeInternalAsync(services);
+                return;
+            }
 
-			var response = context.Response;
-			var stream = response.Body;
+            var sitemap = await InvokeInternalAsync(services);
 
-			response.ContentType = "application/xml";
-			response.StatusCode = 200;
+            var response = context.Response;
+            var stream = response.Body;
 
-			await using var memoryStream = new MemoryStream();
+            response.ContentType = ContentTypeXml;
+            response.StatusCode = 200;
 
-			var bytes = Encoding.UTF8.GetBytes(sitemap);
+            await using var memoryStream = new MemoryStream();
 
-			await memoryStream.WriteAsync(bytes, 0, bytes.Length);
+            var bytes = Encoding.UTF8.GetBytes(sitemap);
 
-			memoryStream.Seek(0, SeekOrigin.Begin);
+            await memoryStream.WriteAsync(bytes, 0, bytes.Length);
 
-			await memoryStream.CopyToAsync(stream, bytes.Length);
-		}
+            memoryStream.Seek(0, SeekOrigin.Begin);
 
-		protected abstract Task<string> InvokeInternalAsync(
-			ISitemapServices services);
-	}
+            await memoryStream.CopyToAsync(stream, bytes.Length);
+        }
+
+        protected abstract Task<string> InvokeInternalAsync(
+            ISitemapServices services);
+    }
 }

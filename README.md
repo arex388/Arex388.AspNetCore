@@ -2,6 +2,15 @@
 
 This is an ASP.NET Core helper library targeting ASP.NET Core 3.1. It contains extensions and utilities I've need to use across my different ASP.NET Core projects. Since it is based on my needs, I do make changes to it from time to time, generally by adding new features or updating the existing ones, but sometimes by removing features. So it is a little volatile that way, but I'd be happy if you gave it a shot anyway.
 
+- [AntiFaviconMiddleware](#antifaviconmiddleware)
+- [FeaturesViewLocationExpander](#featuresviewlocationexpander)
+- [HtmlMinifierMiddleware](#htmlminifiermiddleware)
+- [IdentityProvider](#identityprovider)
+- [PreCompressedStaticFilesMiddleware](#precompressedstaticfilesmiddleware)
+- [SimpleSlugifyParameterTransformer](#simpleslugifyparametertransformer)
+- [SitemapMiddleware](#sitemapmiddleware)
+- [TokenProvider](#tokenprovider)
+
 #### Basic Configuration
 
 There is a extension method for `IServiceCollection` called `AddArex388()` which you can use for basic configuration to enable any of the following:
@@ -24,9 +33,34 @@ public void ConfigureServices(
 }
 ```
 
+#### AntiFaviconMiddleware
+
+The annoying, unsolicited, requests to `/favicon.ico` that browsers love to do has been, well, annoying me. Because it get's processed all the way up the stack in my case it's triggering double the amount of database queries for user details. I've added this middleware to just intercept it and return a 404 as soon as possible.
+
+```C#
+public void Configure(
+	IApplicationBuilder app) {
+	app.UseStaticFiles();
+	app.UseAntiFavicon();
+}
+```
+
 #### FeaturesViewLocationExpander
 
-The `FeaturesViewLocationExpander` is a location expander for the Razor View Engine. It clears all currently registered location expanders, and adds itself. The expander follows the Features folders structure as described by [Jimmy Bogard's Vertical Slices Architecture][0].
+The `FeaturesViewLocationExpander` is a location expander for the Razor View Engine. It clears all currently registered location expanders, and adds itself. The expander follows the Features folders structure as described by [Jimmy Bogard's Vertical Slices Architecture](https://jimmybogard.com/vertical-slice-architecture/).
+
+#### HtmlMinifierMiddleware
+
+The `HtmlMinifierMiddleware` intercepts the response being returned and minifies the HTML using the [HtmlAgilityPack](https://github.com/zzzprojects/html-agility-pack). I recommend using it right after the call to `UseStaticFiles` and `UseAntiFavicon` (if you use it).
+
+```c#
+public void Configure(
+	IApplicationBuilder app) {
+	app.UseStaticFiles();
+	app.UseAntiFavicon();
+	app.UseHtmlMinifier();
+}
+```
 
 #### IdentityProvider
 
@@ -45,28 +79,17 @@ public sealed class MyIdentityProvider :
 }
 ```
 
-#### AntiFaviconMiddleware
+#### PreCompressedStaticFilesMiddleware
 
-The annoying, unsolicited, requests to `/favicon.ico` that browsers love to do has been, well, annoying me. Because it get's processed all the way up the stack in my case it's triggering double the amount of database queries for user details. I've added this middleware to just intercept it and return a 404 as soon as possible.
+Using Gulp I always had my CSS and JS files bundled into a single minified file. That worked great, but it always felt like it wasn't complete. I really wanted to get Gzip and Brottli versions of the minified file and try to serve those first before falling back to the plain minified version. After a bit of tinkering I got Gulp to generate them as well, but I needed a way to intercept the call to the minified file and return either the Gzip or Brottli versions.
 
-```C#
-public void Configure(
-	IApplicationBuilder app) {
-	app.UseStaticFiles();
-	app.UseAntiFavicon();
-}
-```
-
-#### HtmlMinifierMiddleware
-
-The `HtmlMinifierMiddleware` intercepts the response being returned and minifies the HTML using the [HtmlAgilityPack][1]. I recommend using it right after the call to `UseStaticFiles` and `UseAntiFavicon` (if you use it).
+The `PreCompressedStaticFilesMiddleware` was born out of that need. It intercepts requests to CSS and JS files and based on the accept encoding, and existance of the files, will return either the Gzip or Brottli versions or fallback to the minified version.
 
 ```c#
 public void Configure(
 	IApplicationBuilder app) {
+	app.UsePreCompressedStaticFiles();
 	app.UseStaticFiles();
-	app.UseAntiFavicon();
-	app.UseHtmlMinifier();
 }
 ```
 
@@ -94,6 +117,3 @@ The `TokenProvider` is a small helper class for generating random strings. It is
 ```C#
 var token = TokenProvider.Create(128);
 ```
-
-[0]:https://jimmybogard.com/vertical-slice-architecture/
-[1]:https://github.com/zzzprojects/html-agility-pack

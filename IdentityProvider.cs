@@ -2,7 +2,7 @@
 using System.Security.Claims;
 
 namespace Arex388.AspNetCore {
-	public class IdentityProvider {
+    public class IdentityProvider {
 		protected IHttpContextAccessor Accessor { get; }
 
 		public IdentityProvider(

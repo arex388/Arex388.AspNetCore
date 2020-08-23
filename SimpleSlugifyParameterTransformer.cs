@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 
 namespace Arex388.AspNetCore {
-	public sealed class SimpleSlugifyParameterTransformer :
+    public sealed class SimpleSlugifyParameterTransformer :
 		IOutboundParameterTransformer {
 		public string TransformOutbound(
 			object value) {
 			if (!(value is string valueAsString)) {
-				return value.ToString();
+				return value.ToString() ?? string.Empty;
 			}
 
 			var chars = new List<char>();

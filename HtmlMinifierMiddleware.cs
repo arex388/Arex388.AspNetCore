@@ -13,10 +13,10 @@ namespace Arex388.AspNetCore {
             "text/xml"
         };
 
-        private RequestDelegate Next { get; }
+        private readonly RequestDelegate _next;
 
         public HtmlMinifierMiddleware(
-            RequestDelegate next) => Next = next ?? throw new ArgumentNullException(nameof(next));
+            RequestDelegate next) => _next = next ?? throw new ArgumentNullException(nameof(next));
 
         public async Task InvokeAsync(
             HttpContext context) {
@@ -28,7 +28,7 @@ namespace Arex388.AspNetCore {
 
                 response.Body = memoryStream;
 
-                await Next(context);
+                await _next(context);
 
                 memoryStream.Seek(0, SeekOrigin.Begin);
 

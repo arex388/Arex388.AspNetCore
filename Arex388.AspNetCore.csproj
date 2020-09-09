@@ -7,7 +7,7 @@
 		<PackageProjectUrl>https://github.com/arex388/Arex388.AspNetCore</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/arex388/Arex388.AspNetCore</RepositoryUrl>
 		<PackageTags>asp-net-core arex388</PackageTags>
-		<Version>3.1.8</Version>
+		<Version>3.1.10</Version>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

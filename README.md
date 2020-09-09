@@ -2,7 +2,6 @@
 
 This is an ASP.NET Core helper library targeting ASP.NET Core 3.1. It contains extensions and utilities I've need to use across my different ASP.NET Core projects. Since it is based on my needs, I do make changes to it from time to time, generally by adding new features or updating the existing ones, but sometimes by removing features. So it is a little volatile that way, but I'd be happy if you gave it a shot anyway.
 
-- [AntiFaviconMiddleware](#antifaviconmiddleware)
 - [FeaturesViewLocationExpander](#featuresviewlocationexpander)
 - [HtmlMinifierMiddleware](#htmlminifiermiddleware)
 - [IdentityProvider](#identityprovider)
@@ -30,18 +29,6 @@ public void ConfigureServices(
             o.UseIdentityProvider = true;
             o.UseSimpleSlugifyParameterTransformer = true;
         });
-}
-```
-
-#### AntiFaviconMiddleware
-
-The annoying, unsolicited, requests to `/favicon.ico` that browsers love to do has been, well, annoying me. Because it get's processed all the way up the stack in my case it's triggering double the amount of database queries for user details. I've added this middleware to just intercept it and return a 404 as soon as possible.
-
-```C#
-public void Configure(
-	IApplicationBuilder app) {
-	app.UseStaticFiles();
-	app.UseAntiFavicon();
 }
 ```
 

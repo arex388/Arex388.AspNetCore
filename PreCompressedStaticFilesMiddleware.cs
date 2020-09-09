@@ -23,7 +23,7 @@ namespace Arex388.AspNetCore {
             HttpContext httpContext,
             IWebHostEnvironment environment) {
             var request = httpContext.Request;
-            var path = request.Path.Value;
+            var path = request.Path.Value.Replace("/", null);
             var extensionType = GetExtensionType(path);
 
             if (extensionType == ExtensionType.Unknown) {
@@ -70,10 +70,10 @@ namespace Arex388.AspNetCore {
                 return;
             }
 
-            var gzipPath = $"{environment.WebRootPath}\\{path}.gzip";
+            var gzipPath = $"{environment.WebRootPath}\\{path}.gz";
 
             if (!File.Exists(gzipPath)) {
-                throw new FileNotFoundException($"Could not find a .gzip file at: {gzipPath}");
+                throw new FileNotFoundException($"Could not find a .gz file at: {gzipPath}");
             }
 
             var gzipBytes = await File.ReadAllBytesAsync(gzipPath).ConfigureAwait(false);

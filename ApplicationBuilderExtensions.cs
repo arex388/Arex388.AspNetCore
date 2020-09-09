@@ -2,9 +2,6 @@
 
 namespace Microsoft.AspNetCore.Builder {
     public static class ApplicationBuilderExtensions {
-        public static IApplicationBuilder UseAntiFavicon(
-            this IApplicationBuilder builder) => builder.UseMiddleware<AntiFaviconMiddleware>();
-
         public static IApplicationBuilder UseHtmlMinifier(
             this IApplicationBuilder builder) => builder.UseMiddleware<HtmlMinifierMiddleware>();
 

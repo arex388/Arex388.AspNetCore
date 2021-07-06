@@ -28,12 +28,12 @@ namespace Arex388.AspNetCore {
 
                 response.Body = memoryStream;
 
-                await _next(context);
+                await _next(context).ConfigureAwait(false);
 
                 memoryStream.Seek(0, SeekOrigin.Begin);
 
                 if (!ContentTypes.Contains(response.ContentType)) {
-                    await memoryStream.CopyToAsync(stream);
+                    await memoryStream.CopyToAsync(stream).ConfigureAwait(false);
 
                     return;
                 }
@@ -46,7 +46,7 @@ namespace Arex388.AspNetCore {
                 var html = document.DocumentNode.OuterHtml;
                 var htmlBytes = Encoding.UTF8.GetBytes(html);
 
-                await stream.WriteAsync(htmlBytes);
+                await stream.WriteAsync(htmlBytes).ConfigureAwait(false);
             } finally {
                 response.Body = stream;
             }

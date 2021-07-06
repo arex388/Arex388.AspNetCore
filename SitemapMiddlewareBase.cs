@@ -6,9 +6,6 @@ using System.Threading.Tasks;
 
 namespace Arex388.AspNetCore {
     public abstract class SitemapMiddlewareBase {
-        private const string ContentTypeXml = "application/xml";
-        private const string SitemapPath = "/sitemap.xml";
-
         protected RequestDelegate Next { get; }
 
         protected SitemapMiddlewareBase(
@@ -17,29 +14,29 @@ namespace Arex388.AspNetCore {
         public async Task InvokeAsync(
             HttpContext context,
             ISitemapServices services) {
-            if (context.Request.Path.Value != SitemapPath) {
-                await Next(context);
+            if (context.Request.Path.Value != "/sitemap.xml") {
+                await Next(context).ConfigureAwait(false);
 
                 return;
             }
 
-            var sitemap = await InvokeInternalAsync(services);
+            var sitemap = await InvokeInternalAsync(services).ConfigureAwait(false);
 
             var response = context.Response;
             var stream = response.Body;
 
-            response.ContentType = ContentTypeXml;
+            response.ContentType = "application/xml";
             response.StatusCode = 200;
 
             await using var memoryStream = new MemoryStream();
 
             var bytes = Encoding.UTF8.GetBytes(sitemap);
 
-            await memoryStream.WriteAsync(bytes, 0, bytes.Length);
+            await memoryStream.WriteAsync(bytes.AsMemory(0, bytes.Length)).ConfigureAwait(false);
 
             memoryStream.Seek(0, SeekOrigin.Begin);
 
-            await memoryStream.CopyToAsync(stream, bytes.Length);
+            await memoryStream.CopyToAsync(stream, bytes.Length).ConfigureAwait(false);
         }
 
         protected abstract Task<string> InvokeInternalAsync(

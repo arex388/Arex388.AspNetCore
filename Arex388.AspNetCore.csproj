@@ -1,13 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>netcoreapp3.1</TargetFramework>
+		<TargetFramework>net5.0</TargetFramework>
     <Nullable>enable</Nullable>
-		<Description>ASP.NET Core 3.1 extensions and utilities. Refer to the README on GitHub for instructions on how to use.</Description>
+		<Description>ASP.NET Core 5+ extensions and utilities. Refer to the README on GitHub for instructions on how to use.</Description>
 		<PackageProjectUrl>https://github.com/arex388/Arex388.AspNetCore</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/arex388/Arex388.AspNetCore</RepositoryUrl>
 		<PackageTags>asp-net-core arex388</PackageTags>
-		<Version>3.1.10</Version>
+		<Version>5.0.7</Version>
+		<EnableNETAnalyzers>true</EnableNETAnalyzers>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -23,8 +24,7 @@
   </ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Arex388.Extensions.HtmlAgilityPack" Version="1.0.0" />
-		<PackageReference Include="HtmlAgilityPack" Version="1.11.24" />
+		<PackageReference Include="Arex388.Extensions.HtmlAgilityPack" Version="1.0.3" />
 	</ItemGroup>
 
 </Project>

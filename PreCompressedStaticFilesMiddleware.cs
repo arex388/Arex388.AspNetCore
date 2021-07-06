@@ -7,13 +7,6 @@ using System.Threading.Tasks;
 
 namespace Arex388.AspNetCore {
     public class PreCompressedStaticFilesMiddleware {
-        private const string ContentTypeCss = "text/css";
-        private const string ContentTypeJs = "text/javascript";
-        private const string EncodingBr = "br";
-        private const string EncodingGzip = "gzip";
-        private const string ExtensionCss = ".css";
-        private const string ExtensionJs = ".js";
-
         private readonly RequestDelegate _next;
 
         public PreCompressedStaticFilesMiddleware(
@@ -23,7 +16,7 @@ namespace Arex388.AspNetCore {
             HttpContext httpContext,
             IWebHostEnvironment environment) {
             var request = httpContext.Request;
-            var path = request.Path.Value.Replace("/", null);
+            var path = request.Path.Value!.Replace("/", null);
             var extensionType = GetExtensionType(path);
 
             if (extensionType == ExtensionType.Unknown) {
@@ -65,7 +58,7 @@ namespace Arex388.AspNetCore {
 
                 var brBytes = await File.ReadAllBytesAsync(brPath).ConfigureAwait(false);
 
-                await response.Body.WriteAsync(brBytes, 0, brBytes.Length).ConfigureAwait(false);
+                await response.Body.WriteAsync(brBytes.AsMemory(0, brBytes.Length)).ConfigureAwait(false);
 
                 return;
             }
@@ -78,7 +71,7 @@ namespace Arex388.AspNetCore {
 
             var gzipBytes = await File.ReadAllBytesAsync(gzipPath).ConfigureAwait(false);
 
-            await response.Body.WriteAsync(gzipBytes, 0, gzipBytes.Length).ConfigureAwait(false);
+            await response.Body.WriteAsync(gzipBytes.AsMemory(0, gzipBytes.Length)).ConfigureAwait(false);
         }
 
         //  ========================================================================
@@ -86,45 +79,40 @@ namespace Arex388.AspNetCore {
         //  ========================================================================
 
         private static string GetContentType(
-            ExtensionType extensionType) => extensionType switch
-            {
-                ExtensionType.Css => ContentTypeCss,
-                ExtensionType.Js => ContentTypeJs,
+            ExtensionType extensionType) => extensionType switch {
+                ExtensionType.Css => "text/css",
+                ExtensionType.Js => "text/javascript",
                 _ => throw new NotImplementedException()
             };
 
         private static string GetEncodingType(
             string acceptEncoding) {
-            var isBr = acceptEncoding.Contains(EncodingBr, StringComparison.InvariantCulture);
+            var isBr = acceptEncoding.Contains("br", StringComparison.InvariantCulture);
 
             if (isBr) {
                 return EncodingType.Br;
             }
 
-            var isGzip = acceptEncoding.Contains(EncodingGzip, StringComparison.InvariantCulture);
+            var isGzip = acceptEncoding.Contains("gzip", StringComparison.InvariantCulture);
 
-            if (isGzip) {
-                return EncodingType.Gzip;
-            }
-
-            return EncodingType.Unknown;
+            return isGzip
+                ? EncodingType.Gzip
+                : EncodingType.Unknown;
         }
 
         private static ExtensionType GetExtensionType(
             string path) {
-            var isCss = path.EndsWith(ExtensionCss, StringComparison.InvariantCulture);
+            var isCss = path.EndsWith(".css", StringComparison.InvariantCulture);
 
             if (isCss) {
                 return ExtensionType.Css;
             }
 
-            var isJs = path.EndsWith(ExtensionJs, StringComparison.InvariantCulture);
+            var isJs = path.EndsWith(".js", StringComparison.InvariantCulture);
 
-            if (isJs) {
-                return ExtensionType.Js;
-            }
-
-            return ExtensionType.Unknown;
+            return isJs
+                ? ExtensionType.Js
+                : ExtensionType.Unknown;
         }
 
         private static class EncodingType {

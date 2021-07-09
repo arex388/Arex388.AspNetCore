@@ -5,16 +5,19 @@ This is an ASP.NET Core helper library targeting ASP.NET Core 5.0. It contains e
 - Extensions
   - [ClaimsPrincipal](#claimsprincipal)
   - [Controller](#controller)
+  - [Enumerable](#enumeralb)
   - [HttpRequest](#httprequest)
+  - [ModelStateDictionary](#modelstatedictionary)
+  - [String](#string)
 - Middlewares
-  - [Html Minifier](#htmlminifier)
-  - [Pre-Compressed Static Files](#precompressedstaticfiles)
+  - [Html Minifier](#html-minifier)
+  - [Pre-Compressed Static Files](#pre-compressed-staticf-iles)
   - [Sitemap](#sitemap)
 - Miscellaneous
-  - [Features ViewLocationExpander](#featuresviewlocationexpander)
-  - [Identity Provider](#identityprovider)
-  - [Simple Slugify ParameterTransformer](#simpleslugifyparametertransformer)
-  - [Token Provider](#tokenprovider)
+  - [Features ViewLocationExpander](#features-viewlocationexpander)
+  - [Identity Provider](#identity-provider)
+  - [Simple Slugify ParameterTransformer](#simple-slugify-parametertransformer)
+  - [Token Provider](#token-provider)
 
 
 
@@ -66,9 +69,27 @@ The `Controller` and `HttpRequest` classes have been extended with the following
 
 
 
+#### Enumerable
+
+- `StringJoin<T>(string? separator)` - returns a concatenated string of an enumerable with the specified separator.
+
+
+
 #### HttpRequest
 
 - `GetReferrer()` - returns the request's referrer from the referrer header, if any.
+
+
+
+#### ModelStateDictionary
+
+- `GetDictionary()` - returns an `IDictionary<string, string>` containing any model errors.
+
+
+
+#### String
+
+- `HasValue()` - returns true or false if the string **not** null or empty.
 
 
 

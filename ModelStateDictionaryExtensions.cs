@@ -8,6 +8,6 @@ namespace Microsoft.AspNetCore.Mvc.ModelBinding {
             _ => _.Value.Errors.Count > 0).ToDictionary(
             _ => _.Key,
             _ => _.Value.Errors.Select(
-                e => e.ErrorMessage).StringJoin("; "));
+                (e, i) => $"({i}) {e.ErrorMessage}").StringJoin(" "));
     }
 }

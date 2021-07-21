@@ -7,7 +7,7 @@
 		<PackageProjectUrl>https://github.com/arex388/Arex388.AspNetCore</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/arex388/Arex388.AspNetCore</RepositoryUrl>
 		<PackageTags>asp-net-core arex388</PackageTags>
-		<Version>5.0.10</Version>
+		<Version>5.0.11</Version>
 		<EnableNETAnalyzers>true</EnableNETAnalyzers>
 	</PropertyGroup>
 
